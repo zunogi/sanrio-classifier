@@ -32,12 +32,24 @@ def predict_logits(model, X, batch_size=64):
     next(model.parameters()).device, and bring the answers back with .cpu().
     Work in batches so that a large test set does not run you out of memory.
     """
-    raise NotImplementedError("Problem 3: fill in predict_logits")
+    device = next(model.parameters()).device
+    X = torch.as_tensor(X)
+    model.eval()
+    outputs = []
+    with torch.no_grad():
+        for start in range(0, len(X), batch_size):
+            batch = X[start : start + batch_size].to(device)
+            outputs.append(model(batch).cpu().numpy())
+    if not outputs:
+        return np.empty((0, 0), dtype=np.float32)
+    return np.concatenate(outputs, axis=0).astype(np.float32, copy=False)
 
 
 def accuracy(model, X, y):
     """Return the share of rows the model gets right, as a float 0.0 to 1.0."""
-    raise NotImplementedError("Problem 3: fill in accuracy")
+    logits = predict_logits(model, X)
+    predictions = logits.argmax(axis=1)
+    return float(np.mean(predictions == np.asarray(y)))
 
 
 def confusion_matrix(model, X, y, num_classes):
@@ -47,7 +59,14 @@ def confusion_matrix(model, X, y, num_classes):
     how many images of class i the model called class j. The diagonal is the
     ones it got right.
     """
-    raise NotImplementedError("Problem 3: fill in confusion_matrix")
+    logits = predict_logits(model, X)
+    predictions = logits.argmax(axis=1)
+    y = np.asarray(y, dtype=np.int64)
+    counts = np.bincount(
+        y * num_classes + predictions,
+        minlength=num_classes * num_classes,
+    )
+    return counts.reshape(num_classes, num_classes).astype(np.int64, copy=False)
 
 
 def worst_examples(model, X, y, paths, k=10):
