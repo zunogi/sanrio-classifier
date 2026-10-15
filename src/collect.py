@@ -4,6 +4,7 @@ This file is complete. You do not need to change it.
 
 Usage:
     uv run python src/collect.py --classes "espresso cup,mug,wine glass" --n 120
+    uv run python src/collect.py --classes "label=search phrase,mug,wine glass" --n 120
 
 It writes into data/raw/<class name>/0001.jpg and so on. Images that fail to
 download, fail to open, or are too small are skipped and counted, so the number
@@ -119,13 +120,13 @@ def search_urls(query, how_many):
     return urls
 
 
-def collect_one_class(query, how_many, root):
+def collect_one_class(query, how_many, root, class_name=None):
     """Download up to `how_many` usable images for one search phrase.
 
     The downloads run side by side, because most of the waiting is the network
     rather than us. A lock keeps the counter and the duplicate list honest.
     """
-    out_dir = root / safe_dirname(query)
+    out_dir = root / safe_dirname(class_name if class_name is not None else query)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     urls = search_urls(query, how_many)
@@ -172,26 +173,43 @@ def main():
     parser.add_argument(
         "--classes",
         required=True,
-        help='comma separated search phrases, e.g. "mug,wine glass,paper cup"',
+        help=(
+            'comma separated classes/search phrases, e.g. "mug,wine glass,paper cup"; '
+            'use "class name=search phrase" when they differ'
+        ),
     )
     parser.add_argument("--n", type=int, default=120, help="images per class")
     parser.add_argument("--out", default="data/raw")
     args = parser.parse_args()
 
-    queries = [q.strip() for q in args.classes.split(",") if q.strip()]
-    if len(queries) < 3:
-        sys.exit("You need at least 3 classes.")
+    classes = []
+    for entry in args.classes.split(","):
+        entry = entry.strip()
+        if not entry:
+            continue
+        if "=" in entry:
+            class_name, query = (part.strip() for part in entry.split("=", 1))
+            if not class_name or not query:
+                sys.exit(f'Invalid class entry "{entry}": expected "class name=search phrase".')
+        else:
+            class_name = query = entry
+        classes.append((class_name, query))
+
+    if not classes:
+        sys.exit("You need at least 1 class.")
 
     root = Path(args.out)
     root.mkdir(parents=True, exist_ok=True)
 
     counts = {}
-    for query in queries:
-        counts[query] = collect_one_class(query, args.n, root)
+    for class_name, query in classes:
+        counts[class_name] = collect_one_class(
+            query, args.n, root, class_name=class_name
+        )
 
     print("\nSummary")
-    for query, kept in counts.items():
-        print(f"  {query:30s} {kept}")
+    for class_name, kept in counts.items():
+        print(f"  {class_name:30s} {kept}")
     smallest = min(counts.values())
     if smallest < 50:
         print(
