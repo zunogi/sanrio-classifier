@@ -1,0 +1,8 @@
+experiment        | accuracy | predicted_cinnamoroll | predicted_hello_kitty | predicted_kuromi | predicted_pompompurin | mean_true_probability 
+------------------+----------+-----------------------+-----------------------+------------------+-----------------------+-----------------------
+original          | 0.8929   | 7                     | 5                     | 9                | 7                     | 0.7508                
+bottom_third_grey | 0.6667   | 0                     | 0                     | 2                | 4                     | 0.7170                
+grayscale         | 0.4286   | 0                     | 1                     | 25               | 2                     | 0.4395                
+hue180            | 0.7143   | 8                     | 4                     | 13               | 3                     | 0.6033                
+tile2x2           | 0.6429   | 2                     | 4                     | 10               | 12                    | 0.6551                
+top_third_grey    | 0.8333   | 0                     | 0                     | 1                | 5                     | 0.7929                

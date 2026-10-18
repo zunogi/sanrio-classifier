@@ -1,0 +1,31 @@
+reading /Users/sunogi/Documents/mas1004-assignment1/data/clean
+557 images, 4 classes, read in 6 s
+  cinnamoroll              150
+  hello_kitty              107
+  kuromi                   150
+  pompompurin              150
+training on 446, testing on 111
+model has 11,178,564 parameters, 11,178,564 of them will be trained
+Epoch 1/10: train_loss=0.9290 train_acc=0.6637 test_loss=1.1163 test_acc=0.6216
+Epoch 2/10: train_loss=0.4913 train_acc=0.8318 test_loss=0.6187 test_acc=0.7928
+Epoch 3/10: train_loss=0.2711 train_acc=0.9148 test_loss=0.5637 test_acc=0.8378
+Epoch 4/10: train_loss=0.2189 train_acc=0.9327 test_loss=0.4741 test_acc=0.8649
+Epoch 5/10: train_loss=0.1113 train_acc=0.9664 test_loss=0.7044 test_acc=0.7658
+Epoch 6/10: train_loss=0.0815 train_acc=0.9776 test_loss=0.7075 test_acc=0.8018
+Epoch 7/10: train_loss=0.0839 train_acc=0.9798 test_loss=0.4382 test_acc=0.8649
+Epoch 8/10: train_loss=0.0533 train_acc=0.9865 test_loss=1.1307 test_acc=0.7117
+Epoch 9/10: train_loss=0.0380 train_acc=0.9888 test_loss=0.4419 test_acc=0.8739
+Epoch 10/10: train_loss=0.0415 train_acc=0.9888 test_loss=0.5232 test_acc=0.8108
+
+trained in 4.0 minutes
+train accuracy 98.7%
+test  accuracy 81.1%
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/scratch_curves.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/scratch_confusion.png
+worst_examples is not written yet (Problem 5), so there is no scratch_worst.png this time
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/scratch_model.pt
+
+One line for your experiment table:
+| scratch | random | all layers | 10 | 0.0001 | 11,178,564 | 98.7% | 81.1% |
+
+To put this model on your web page: python src/export_web.py --tag scratch

@@ -1,0 +1,31 @@
+reading /Users/sunogi/Documents/mas1004-assignment1/data/clean
+557 images, 4 classes, read in 6 s
+  cinnamoroll              150
+  hello_kitty              107
+  kuromi                   150
+  pompompurin              150
+training on 446, testing on 111
+model has 11,178,564 parameters, 11,178,564 of them will be trained
+Epoch 1/10: train_loss=0.7649 train_acc=0.7175 test_loss=0.2075 test_acc=0.9459
+Epoch 2/10: train_loss=0.0776 train_acc=0.9933 test_loss=0.1310 test_acc=0.9730
+Epoch 3/10: train_loss=0.0344 train_acc=0.9978 test_loss=0.1400 test_acc=0.9730
+Epoch 4/10: train_loss=0.0127 train_acc=1.0000 test_loss=0.1439 test_acc=0.9640
+Epoch 5/10: train_loss=0.0127 train_acc=1.0000 test_loss=0.1264 test_acc=0.9730
+Epoch 6/10: train_loss=0.0101 train_acc=1.0000 test_loss=0.1242 test_acc=0.9730
+Epoch 7/10: train_loss=0.0061 train_acc=1.0000 test_loss=0.1232 test_acc=0.9730
+Epoch 8/10: train_loss=0.0034 train_acc=1.0000 test_loss=0.1280 test_acc=0.9730
+Epoch 9/10: train_loss=0.0028 train_acc=1.0000 test_loss=0.1280 test_acc=0.9730
+Epoch 10/10: train_loss=0.0022 train_acc=1.0000 test_loss=0.1253 test_acc=0.9730
+
+trained in 3.9 minutes
+train accuracy 100.0%
+test  accuracy 97.3%
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/run_curves.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/run_confusion.png
+worst_examples is not written yet (Problem 5), so there is no run_worst.png this time
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/run_model.pt
+
+One line for your experiment table:
+| run | ImageNet | all layers | 10 | 0.0001 | 11,178,564 | 100.0% | 97.3% |
+
+To put this model on your web page: python src/export_web.py --tag run

@@ -1,0 +1,51 @@
+MAS1004 Assignment 1, checking your work
+
+Training images  (/Users/sunogi/Documents/mas1004-assignment1/data/clean)
+-------------------------------------------------------------------------
+  cinnamoroll                    113 images
+  hello_kitty                     84 images
+  kuromi                         124 images
+  pompompurin                    137 images
+
+Your images from a new source  (/Users/sunogi/Documents/mas1004-assignment1/data/new_images)
+--------------------------------------------------------------------------------------------
+  cinnamoroll                      7 images
+  hello_kitty                      6 images
+  kuromi                           9 images
+  pompompurin                      6 images
+
+The same image appearing twice
+------------------------------
+  ok       no file appears twice byte for byte. Near copies (the same picture resized or re-saved) are only found by `python src/clean.py suspects` and `python src/clean.py overlap`.
+
+The model you exported for the web page
+---------------------------------------
+  ok       4 classes: cinnamoroll, hello_kitty, kuromi, pompompurin
+  ok       model.onnx is 44.8 MB, 11,178,564 parameters
+           input [1, 3, 224, 224], prepared as: shorter side 256, centre 224 x 224, mean [0.485, 0.456, 0.406], std [0.229, 0.224, 0.225]
+
+Does the exported model give the answers Python gave?
+-----------------------------------------------------
+  ok       yes, they agree (largest gap 0.0000)
+
+Your images from a new source  (/Users/sunogi/Documents/mas1004-assignment1/data/new_images)
+--------------------------------------------------------------------------------------------
+
+  accuracy on your new images: 25/28 = 89.3%
+
+  rows are what it really is, columns are what the model said
+                  cinnamor hello_ki   kuromi pompompu
+    cinnamoroll          6        0        1        0
+    hello_kitty          0        5        0        1
+    kuromi               1        0        8        0
+    pompompurin          0        0        0        6
+
+  the mistakes it was most sure about:
+    20261015_181714.jpg          said pompompurin (83%), really hello_kitty
+    20261015_183443.jpg          said kuromi (72%), really cinnamoroll
+    20261015_183901.jpg          said cinnamoroll (46%), really kuromi
+
+Summary
+-------
+  nothing is broken
+

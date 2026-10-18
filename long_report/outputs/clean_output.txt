@@ -1,0 +1,31 @@
+reading /Users/sunogi/Documents/mas1004-assignment1/data/clean
+458 images, 4 classes, read in 5 s
+  cinnamoroll              113
+  hello_kitty              84
+  kuromi                   124
+  pompompurin              137
+training on 366, testing on 92
+model has 11,178,564 parameters, 11,178,564 of them will be trained
+Epoch 1/10: train_loss=0.6653 train_acc=0.7596 test_loss=0.1594 test_acc=0.9565
+Epoch 2/10: train_loss=0.0582 train_acc=0.9973 test_loss=0.0681 test_acc=0.9783
+Epoch 3/10: train_loss=0.0234 train_acc=0.9973 test_loss=0.0585 test_acc=0.9783
+Epoch 4/10: train_loss=0.0116 train_acc=1.0000 test_loss=0.0544 test_acc=0.9891
+Epoch 5/10: train_loss=0.0087 train_acc=1.0000 test_loss=0.0470 test_acc=1.0000
+Epoch 6/10: train_loss=0.0072 train_acc=1.0000 test_loss=0.0455 test_acc=0.9891
+Epoch 7/10: train_loss=0.0057 train_acc=1.0000 test_loss=0.0427 test_acc=0.9891
+Epoch 8/10: train_loss=0.0049 train_acc=1.0000 test_loss=0.0391 test_acc=1.0000
+Epoch 9/10: train_loss=0.0032 train_acc=1.0000 test_loss=0.0385 test_acc=1.0000
+Epoch 10/10: train_loss=0.0025 train_acc=1.0000 test_loss=0.0407 test_acc=0.9891
+
+trained in 3.3 minutes
+train accuracy 100.0%
+test  accuracy 98.9%
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/clean_curves.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/clean_confusion.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/clean_worst.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/clean_model.pt
+
+One line for your experiment table:
+| clean | ImageNet | all layers | 10 | 0.0001 | 11,178,564 | 100.0% | 98.9% |
+
+To put this model on your web page: python src/export_web.py --tag clean

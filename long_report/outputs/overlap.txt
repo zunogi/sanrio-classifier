@@ -1,0 +1,24 @@
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /Users/sunogi/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
+describing 583 images with ResNet18 ...
+  32/583
+  64/583
+  96/583
+  128/583
+  160/583
+  192/583
+  224/583
+  256/583
+  288/583
+  320/583
+  352/583
+  384/583
+  416/583
+  448/583
+  480/583
+  512/583
+  544/583
+  576/583
+  583/583
+none of your 28 new images is a near copy of any of the 555 images you downloaded
+
+the closest any new image comes to a downloaded one: 0.90 (near copies are above 0.95)

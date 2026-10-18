@@ -1,0 +1,31 @@
+reading /Users/sunogi/Documents/mas1004-assignment1/data/clean
+557 images, 4 classes, read in 6 s
+  cinnamoroll              150
+  hello_kitty              107
+  kuromi                   150
+  pompompurin              150
+training on 446, testing on 111
+model has 11,178,564 parameters, 2,052 of them will be trained
+Epoch 1/10: train_loss=1.4387 train_acc=0.3565 test_loss=1.0540 test_acc=0.6126
+Epoch 2/10: train_loss=0.9532 train_acc=0.6861 test_loss=0.7492 test_acc=0.7838
+Epoch 3/10: train_loss=0.7059 train_acc=0.8318 test_loss=0.5667 test_acc=0.9279
+Epoch 4/10: train_loss=0.5665 train_acc=0.8767 test_loss=0.4779 test_acc=0.9009
+Epoch 5/10: train_loss=0.4720 train_acc=0.8789 test_loss=0.4059 test_acc=0.9279
+Epoch 6/10: train_loss=0.3910 train_acc=0.9260 test_loss=0.3704 test_acc=0.9279
+Epoch 7/10: train_loss=0.3583 train_acc=0.9283 test_loss=0.3460 test_acc=0.9189
+Epoch 8/10: train_loss=0.3332 train_acc=0.9170 test_loss=0.3260 test_acc=0.9279
+Epoch 9/10: train_loss=0.2891 train_acc=0.9507 test_loss=0.2974 test_acc=0.9279
+Epoch 10/10: train_loss=0.2588 train_acc=0.9439 test_loss=0.2889 test_acc=0.9279
+
+trained in 2.0 minutes
+train accuracy 96.4%
+test  accuracy 92.8%
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/frozen_curves.png
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/frozen_confusion.png
+worst_examples is not written yet (Problem 5), so there is no frozen_worst.png this time
+wrote /Users/sunogi/Documents/mas1004-assignment1/results/frozen_model.pt
+
+One line for your experiment table:
+| frozen | ImageNet | last layer | 10 | 0.001 | 2,052 | 96.4% | 92.8% |
+
+To put this model on your web page: python src/export_web.py --tag frozen

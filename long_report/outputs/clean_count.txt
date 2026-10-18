@@ -1,0 +1,13 @@
+class                    downloaded  removed   kept  other
+cinnamoroll                     150       37    113      0
+hello_kitty                     107       23     84      0
+kuromi                          150       26    124      0
+pompompurin                     150       13    137      0
+
+reasons
+    65  multiple characters
+    22  near copy
+    10  fan art
+     2  secondary image, not main subject
+
+"other" is images that are in data/raw but neither in data/clean nor removed with `clean.py remove`, for example ones you deleted by hand. Their reasons are not recorded.

@@ -17,8 +17,8 @@
 \usepackage{mas1004}
 
 \reporttitle{Assignment 1: Long report}
-\studentname{Your name}
-\studentid{Your student ID}
+\studentname{Ten Aleksandra}
+\studentid{20261332}
 
 \begin{document}
 \makeheader
@@ -27,23 +27,26 @@
 \section*{Problem 1. Categories and images}
 
 \subsection*{Why these categories}
-\fillin{Why these categories, and why you care about them.}
+I am a big fan of Sanrio and generally love cute things, so I wanted to make
+the project a little cuter. I also thought the characters were visually
+distinct enough that training would go smoothly.
 
 \subsection*{What I expected the model to use}
-\fillin{What you thought, before training, the model would use to tell them
-apart: shape, colour, texture, background, or something else.}
+Before training, I expected colour schemes and distinctive shapes to be the
+most obvious differences between the characters.
 
 \subsection*{Images per category}
-\fillin{How many images you got for each category.}
+The downloaded set had Cinnamoroll: 150, Hello Kitty: 107, Kuromi: 150, and
+Pompompurin: 150 images.
 
 % ---------------------------------------------------------------------------
 \section*{Problem 2. Preparing an image}
 
-\sidebyside{figures/prepare_original.jpg}{\fillin{the image as downloaded}}
-           {figures/prepare_result.png}{\fillin{what prepare\_image made of it}}
+\sidebyside{figures/prepare_original.jpg}{Original Pompompurin image}
+           {figures/prepare_result.png}{The centre crop made by \texttt{prepare\_image}}
 
-\fillin{What was cut off, and an image where the crop cut off part of the
-thing you care about.}
+The centre crop removes part of the small figure and surrounding context at
+the lower left. The main Pompompurin figure remains in the crop.
 
 % ---------------------------------------------------------------------------
 \section*{Problem 3. First training runs}
@@ -53,110 +56,217 @@ thing you care about.}
 \toprule
 tag & start & trained & epochs & lr & trainable parameters & train acc. & test acc. \\
 \midrule
-\multicolumn{8}{l}{\fillin{one row per run, as run.py printed it}} \\
+run & ImageNet & all layers & 10 & 0.0001 & 11,178,564 & 100.0\% & 97.3\% \\
+scratch & random & all layers & 10 & 0.0001 & 11,178,564 & 98.7\% & 81.1\% \\
+frozen & ImageNet & last layer & 10 & 0.001 & 2,052 & 96.4\% & 92.8\% \\
+short & ImageNet & all layers & 3 & 0.0001 & 11,178,564 & 100.0\% & 98.2\% \\
+clean & ImageNet & all layers & 10 & 0.0001 & 11,178,564 & 100.0\% & 98.9\% \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\picturefile{figures/run_curves.png}
+The run loss fell quickly and then flattened; training loss continued to fall
+while test loss fluctuated near its later values. Training accuracy was
+100.0\% and test accuracy was 97.3\%, a small train-test gap. In the run
+confusion matrix, the largest confusion was Cinnamoroll predicted as Hello
+Kitty. This was plausible given my expectation that the model would use
+visual appearance such as colour and shape.
 
-\fillin{Did the loss go down? Did it keep going down, or flatten out?}
+Starting from ImageNet weights gave a higher test accuracy than starting from
+random weights: 97.3\% compared with 81.1\%. Training only the last layer
+reached 92.8\%, below the all-layer run's 97.3\%, but still relatively close.
+The ImageNet model already had useful visual features, while the model trained
+from scratch had to learn them from this smaller assignment dataset.
 
-\fillin{The gap between train and test accuracy, and what it means.}
-
-\begin{center}\picturefile[0.5\linewidth]{figures/run_confusion.png}\end{center}
-
-\fillin{Which two categories it mixes up most, and whether that surprised you.}
-
-\fillin{How far apart the test accuracies are, starting from ImageNet and from
-random numbers, and why you think that is.}
-
-\fillin{How close training only the last layer gets to training all of them.}
+\begin{center}
+\picturefile[0.48\linewidth]{figures/run_curves.png}\hfill
+\picturefile[0.48\linewidth]{figures/run_confusion.png}
+\end{center}
+\begin{center}
+\picturefile[0.48\linewidth]{figures/scratch_curves.png}\hfill
+\picturefile[0.48\linewidth]{figures/scratch_confusion.png}
+\end{center}
+\begin{center}
+\picturefile[0.48\linewidth]{figures/frozen_curves.png}\hfill
+\picturefile[0.48\linewidth]{figures/frozen_confusion.png}
+\end{center}
+\begin{center}
+\picturefile[0.48\linewidth]{figures/short_curves.png}\hfill
+\picturefile[0.48\linewidth]{figures/short_confusion.png}
+\end{center}
+\begin{center}
+\picturefile[0.48\linewidth]{figures/clean_curves.png}\hfill
+\picturefile[0.48\linewidth]{figures/clean_confusion.png}
+\end{center}
 
 \subsection*{Output of the runs}
 \outputfile{outputs/run_output.txt}
 \outputfile{outputs/scratch_output.txt}
 \outputfile{outputs/frozen_output.txt}
-% One more line like these for the setting you chose, named by its tag.
-\fillin{the output of the run with your own setting}
+\outputfile{outputs/short_output.txt}
 
 % ---------------------------------------------------------------------------
 \section*{Problem 4. Cleaning}
 
 \subsection*{My rule}
-\fillin{Your rule, in one or two sentences, as you wrote it before you
-started.}
+My rule was: ``remove an image if more than one Sanrio character is clearly
+visible, or it is fan art or a different art style, or the character is only
+a small secondary element (sticker or logo on merchandise), not the main
+subject; keep it if exactly one character is the clear main subject''.
 
 \subsection*{Three kinds of junk}
-\fillin{Three kinds of junk, with one picture of each.}
+Examples of the kinds I removed:
 
-% For example: \picturefile[0.3\linewidth]{figures/junk_1.jpg}
+\begin{center}
+\picturefile[0.31\linewidth]{figures/junk_multiple_characters.jpg}\hfill
+\picturefile[0.31\linewidth]{figures/junk_fan_art.jpg}\hfill
+\picturefile[0.31\linewidth]{figures/junk_secondary.jpg}
+\end{center}
+\begin{center}
+Multiple characters \hfill Fan art or a different style \hfill
+Character secondary to merchandise
+\end{center}
 
 \subsection*{What I removed}
+\outputfile{outputs/clean_output.txt}
 \outputfile{outputs/clean_count.txt}
 
-\fillin{How many near copies it found, and what you did with them.}
+The removal log records 22 images removed as near copies. I stopped before a
+second pass over Kuromi and Pompompurin, so some near copies are still in the
+data. I also kept the near-copy sheet for reference:
+\picturefile[0.8\linewidth]{figures/copies.png}
 
-\fillin{Of the first 20 suspects in each class, how many you removed. Whether
-the suspects included junk you had missed, and whether you found junk it did
-not list.}
+Among the first 20 suspects in each class, I removed 12 Cinnamoroll, 8 Hello
+Kitty, 7 Kuromi, and 2 Pompompurin images. The suspect list revealed junk I
+had missed, and my manual review also found junk that was not listed. The
+suspect counts were matched from the saved suspect ranking and removal log.
 
 \subsection*{Before and after cleaning}
 \outputfile{outputs/compare.txt}
 
-\fillin{The test accuracy and the accuracy on your new images, before and
-after. If a number went down, why you think it did.}
+On the downloaded test set, accuracy rose from 97.3\% before cleaning to
+98.9\% after cleaning. On the unchanged new images it rose from 82.1\% to
+89.3\%. Neither accuracy went down; removing images outside my category rule
+may have made the training data more consistent.
 
 % ---------------------------------------------------------------------------
 \section*{Problem 5. Images from a new source}
 
-\fillin{Where your new images came from, and why you are sure none of them are
-among your downloads.}
+I took some of the new images myself and took screenshots from unpopular
+videos. They were not collected by the web search used for the downloads.
 
 \outputfile{outputs/overlap.txt}
 
-\fillin{The accuracy on your downloaded test set and on your new images, side
-by side.}
+The cleaned model's downloaded-test accuracy was 98.9\%; its accuracy on the
+new images was 89.3\%. The new images had different lighting and less clear
+backgrounds, which I think contributed to the mistakes.
 
-\fillin{Five mistakes it was confident about, with the pictures. For each one,
-what in the image you think pushed it the wrong way.}
+The saved check output lists three confident mistakes on the new images, so I
+include those three rather than inventing more. The downloaded-set mistake is
+shown separately in the saved worst-example plot: a Hello Kitty image was
+predicted as Cinnamoroll.
 
-\fillin{What is different about your new images: background, lighting, angle,
-distance, what else is in the frame.}
+\picturefile[0.72\linewidth]{figures/clean_worst.png}
+
+\begin{center}
+\picturefile[0.31\linewidth]{figures/20261015_181714.jpg}\hfill
+\picturefile[0.31\linewidth]{figures/20261015_183443.jpg}\hfill
+\picturefile[0.31\linewidth]{figures/20261015_183901.jpg}
+\end{center}
+\begin{center}
+Hello Kitty was called Pompompurin; Cinnamoroll was called Kuromi;
+Kuromi was called Cinnamoroll. Differences in lighting and unclear
+backgrounds may have contributed.
+\end{center}
 
 % ---------------------------------------------------------------------------
 \section*{Problem 6. The demo}
 
-Address: \fillin{your GitHub Pages address}
+Address: \url{https://zunogi.github.io/sanrio-classifier/}
 
-\fillin{What happens when you show it something that is none of your
-categories.}
+The demo still assigns an input outside the categories to one of its four
+classes.
 
 % ---------------------------------------------------------------------------
 \section*{Problem 7. What the model looks at}
 
-% Copy this subsection once for every guess.
-\subsection*{Guess 1}
+The guesses came from quick manual tests on the demo page, including changing
+images to grayscale and covering parts. I was also suspicious that training
+had gone too smoothly.
 
-\fillin{The guess, and what in your images or your model's mistakes made you
-think of it.}
+\subsection*{Exact request to the agent}
+\begin{Verbatim}[fontsize=\footnotesize,breaklines]
+Part 1. Do not modify anything in data/new_images (the 28 originals).
+Create copies under data/changed/, keeping the same class sub-folders
+(data/changed/<experiment>/<class>/<same file name>):
+1. grayscale: convert each image to grayscale, saved as 3-channel RGB.
+2. hue180: shift the hue of each image by 180 degrees (same shape, different colours).
+3. top_third_grey: only for the images in data/new_images/pompompurin, cover the top third
+   of the image with a flat grey (128,128,128) rectangle.
+4. bottom_third_grey: same, but cover the bottom third instead.
+5. tile2x2: for every image in data/new_images, make one image that is the same picture
+   repeated in a 2x2 grid (same total size as the original).
+Do not change any file in src/.
 
-\fillin{The change you chose, and why it tests the guess.}
+Part 2. Write a new script src/experiments.py. It loads the trained model from
+results/clean_model.pt (use train.load), and for data/new_images and for each folder in
+data/changed it uses data.load_folder to read the images and predicts with softmax.
+For each folder print and save to results/experiments.csv:
+accuracy, how many images were predicted as each class, and the mean probability given
+to the TRUE class. Also save results/experiments_per_image.csv with one row per image:
+experiment, file, true class, predicted class, confidence, probability of true class.
+Do not change any existing function. Show me the printed table.
+\end{Verbatim}
 
-My request to the agent, word for word:
-\begin{quote}
-\fillin{the request}
-\end{quote}
+\subsection*{Guess 1: dark or grayscale images are called Kuromi}
+I tested grayscale images because quick demo tests had suggested that losing
+colour could change the answer. Grayscale tests whether the model relies on
+colour; I did not separately darken images, so the dark-image part of the
+guess remains untested. Accuracy was 0.4286 on grayscale images, and the model
+predicted Kuromi for 25 images.
 
-% One \sidebyside for every image you changed.
-\sidebyside{figures/guess1_original_1.jpg}{\fillin{original: the model's answer}}
-           {figures/guess1_changed_1.jpg}{\fillin{changed: the model's answer}}
+\sidebyside{figures/guess1_original.jpg}{Original answer: Cinnamoroll}
+           {figures/guess1_grayscale.jpg}{Grayscale answer: Kuromi}
 
-\fillin{What the results say about the guess.}
+\subsection*{Guess 2: colour matters}
+I thought yellow might matter for Pompompurin and light blue for Cinnamoroll.
+The hue shift tests whether changing colour changes predictions, but it
+changes the colours across the whole image and does not isolate those exact
+colour cues. Accuracy was 0.7143 after the hue shift.
+
+\sidebyside{figures/guess2_original.jpg}{Original answer: Cinnamoroll}
+           {figures/guess2_hue180.jpg}{Hue-shifted answer: Kuromi}
+
+\subsection*{Guess 3: Pompompurin is recognised by its hat}
+Covering the top third was intended to test whether removing the region with
+the hat changes Pompompurin predictions. The top-third experiment's accuracy
+was 0.8333: 5 of the 6 Pompompurin images remained classified as Pompompurin.
+One example changed from Pompompurin to Kuromi. This guess was not confirmed:
+the mask covered more than just the hat, and the test does not isolate the hat
+as the cause.
+
+\sidebyside{figures/guess3_original.jpg}{Original answer: Pompompurin}
+           {figures/guess3_top_third_grey.jpg}{Top third grey answer: Kuromi}
+
+\subsection*{Guess 4: repeated characters confuse the model}
+Repeating each image in a 2x2 grid tests the effect of seeing several smaller
+copies of the same character. Accuracy was 0.6429 after tiling. The lower
+accuracy is consistent with the guess, although tiling also makes each
+character smaller.
+
+\sidebyside{figures/guess4_original.jpg}{Original answer: Cinnamoroll}
+           {figures/guess4_tile2x2.jpg}{Tiled answer: Pompompurin}
 
 \subsection*{What I now think the model uses}
-\fillin{What you now think the model uses to tell your categories apart, and
-how sure you are.}
+Colour and tone seem to be the main factors to me because grayscale images
+had the worst results. I am not certain that colour alone explains the
+predictions: the colour changes affected whole images, and the top-third and
+tiling tests changed more than one visual property.
+
+\subsection*{Experiment summaries and per-image results}
+\outputfile{outputs/experiments.txt}
+\outputfile{outputs/experiments.csv}
+\outputfile{outputs/experiments_per_image.csv}
 
 % ---------------------------------------------------------------------------
 \section*{Appendix. Output of check.py}
